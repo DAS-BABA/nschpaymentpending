@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusHub Project Bill - NSCH</title>
+<style>
+    :root {
+        --ink:#111827;
+        --muted:#5b6472;
+        --line:#d8dde5;
+        --soft:#f4f6f8;
+        --navy:#101827;
+        --red:#a51d2d;
+        --red-soft:#fff2f3;
+    }
+    * { box-sizing:border-box; }
+    body {
+        margin:0;
+        background:#eef1f5;
+        color:var(--ink);
+        font-family:Arial, Helvetica, sans-serif;
+        line-height:1.45;
+    }
+    .page {
+        width:min(900px, calc(100% - 32px));
+        margin:32px auto;
+        background:#fff;
+        padding:42px 48px 46px;
+        box-shadow:0 12px 35px rgba(16,24,39,.10);
+    }
+    .top {
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-start;
+        border-bottom:1px solid var(--line);
+        padding-bottom:22px;
+        gap:24px;
+    }
+    .brand {
+        font-size:34px;
+        font-weight:800;
+        letter-spacing:-1px;
+    }
+    .issued {
+        margin-top:5px;
+        font-size:13px;
+        color:var(--muted);
+    }
+    .title {
+        text-align:right;
+    }
+    .title h1 {
+        margin:0;
+        font-size:27px;
+        letter-spacing:.5px;
+    }
+    .meta {
+        margin-top:8px;
+        font-size:13px;
+        color:var(--muted);
+    }
+    .meta strong { color:var(--ink); }
+    .bill-info {
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        margin-top:25px;
+        border:1px solid var(--line);
+    }
+    .bill-info > div {
+        padding:14px 16px;
+    }
+    .bill-info > div + div {
+        border-left:1px solid var(--line);
+    }
+    .label {
+        display:block;
+        text-transform:uppercase;
+        font-size:11px;
+        font-weight:800;
+        color:#6b7280;
+        letter-spacing:.8px;
+        margin-bottom:5px;
+    }
+    .value { font-weight:700; }
+    table {
+        width:100%;
+        border-collapse:collapse;
+        margin-top:25px;
+        font-size:13px;
+    }
+    th {
+        background:var(--navy);
+        color:#fff;
+        text-align:left;
+        padding:12px 13px;
+        font-size:12px;
+    }
+    td {
+        border:1px solid var(--line);
+        padding:14px 13px;
+        vertical-align:top;
+    }
+    th:last-child, td:last-child {
+        width:135px;
+        text-align:right;
+        white-space:nowrap;
+        font-weight:800;
+    }
+    .item-title { font-weight:800; font-size:14px; }
+    .domain { color:var(--muted); margin-top:2px; }
+    .summary { color:#374151; }
+    .summary div { margin:2px 0; }
+    .totals {
+        width:min(420px,100%);
+        margin:20px 0 0 auto;
+    }
+    .total-row {
+        display:flex;
+        justify-content:space-between;
+        padding:8px 10px;
+        font-size:14px;
+    }
+    .total-row.outstanding {
+        border-top:2px solid var(--red);
+        margin-top:2px;
+        padding-top:12px;
+        color:var(--red);
+        font-size:20px;
+        font-weight:800;
+    }
+    .support {
+        margin-top:25px;
+        background:#f6f8fa;
+        border:1px solid #bfc7d2;
+        padding:17px;
+        display:flex;
+        justify-content:space-between;
+        gap:20px;
+        align-items:center;
+    }
+    .support h3, .terms h3 {
+        margin:0 0 5px;
+        font-size:15px;
+    }
+    .support p { margin:3px 0; font-size:13px; }
+    .support a { color:#1d4ed8; word-break:break-all; }
+    .qr {
+        width:105px;
+        height:105px;
+        border:5px solid white;
+        flex:0 0 auto;
+    }
+    .terms { margin-top:24px; }
+    .terms p {
+        margin:8px 0;
+        font-size:13px;
+        color:#303844;
+    }
+    .notice {
+        margin-top:20px;
+        border:1px solid #e3a0a7;
+        border-left:6px solid var(--red);
+        background:var(--red-soft);
+        padding:18px 19px;
+    }
+    .notice h3 {
+        margin:0 0 8px;
+        color:var(--red);
+        font-size:16px;
+    }
+    .notice p {
+        margin:7px 0;
+        font-size:13px;
+        color:#3f1f23;
+    }
+    .footer {
+        margin-top:25px;
+        padding-top:14px;
+        border-top:1px solid var(--line);
+        font-size:12px;
+        color:var(--muted);
+    }
+    .print {
+        position:fixed;
+        right:20px;
+        bottom:20px;
+        border:0;
+        border-radius:8px;
+        background:var(--navy);
+        color:white;
+        padding:11px 16px;
+        cursor:pointer;
+        font-weight:700;
+        box-shadow:0 5px 18px rgba(0,0,0,.2);
+    }
+    @media (max-width:700px) {
+        .page { padding:28px 22px; margin:16px auto; }
+        .top { flex-direction:column; }
+        .title { text-align:left; }
+        .bill-info { grid-template-columns:1fr; }
+        .bill-info > div + div { border-left:0; border-top:1px solid var(--line); }
+        table { font-size:12px; }
+        th:last-child, td:last-child { width:100px; }
+        .support { align-items:flex-start; }
+    }
+    @media print {
+        body { background:#fff; }
+        .page { width:100%; margin:0; box-shadow:none; padding:20px; }
+        .print { display:none; }
+        @page { size:A4; margin:10mm; }
+    }
+</style>
+</head>
+<body>
+<main class="page">
+    <header class="top">
+        <div>
+            <div class="brand">CampusHub</div>
+            <div class="issued">Issued on behalf of CampusHub by <strong>Vinayak Pandya</strong></div>
+        </div>
+        <div class="title">
+            <h1>PROJECT BILL</h1>
+            <div class="meta">
+                Date: <strong>06 August 2026</strong><br>
+                Final payment deadline: <strong>08 August 2026</strong>
+            </div>
+        </div>
+    </header>
+
+    <section class="bill-info">
+        <div>
+            <span class="label">Bill To</span>
+            <span class="value">Nitin Shrimali</span>
+        </div>
+        <div>
+            <span class="label">Project</span>
+            <span class="value">NSCH - Nitin Shrimali Cyber Hygiene</span>
+        </div>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product / Scope</th>
+                <th>Commercial Summary</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="item-title">1. NSCH Personal Portfolio</div>
+                    <div class="domain">nschindia.in</div>
+                </td>
+                <td class="summary">
+                    <div>Domain purchase: Rs. 1,000</div>
+                    <div>1-year extension: Rs. 1,500</div>
+                    <div>Production package: Rs. 11,000</div>
+                    <div>Database, hosting, development, maintenance and urgency-related work.</div>
+                    <div>Previously referenced penalties are revoked for this product.</div>
+                </td>
+                <td>Rs. 13,500</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="item-title">2. NSCH Safe Netizen Portal</div>
+                    <div>(Examination Portal)</div>
+                    <div class="domain">nschsafenetizen.in</div>
+                </td>
+                <td class="summary">
+                    <div>Current product total: Rs. 16,500</div>
+                    <div>Database, hosting, development, maintenance, urgency-related work, payment-delay penalty charges, and additional troubleshooting/log review arising from repeated functionality reports.</div>
+                    <div><strong>Renewal excluded:</strong> current expiry 02 Feb 2027; separate renewal Rs. 1,350.</div>
+                </td>
+                <td>Rs. 16,500</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <section class="totals">
+        <div class="total-row"><span>Agreed project total</span><strong>Rs. 30,000</strong></div>
+        <div class="total-row"><span>Amount received</span><strong>Rs. 26,000</strong></div>
+        <div class="total-row outstanding"><span>Outstanding balance</span><span>Rs. 4,000</span></div>
+    </section>
+
+    <section class="support">
+        <div>
+            <h3>Payment Agreement / Supporting Record</h3>
+            <p>The customer agreement records the commitment to clear the pending amount during the first week of August 2026.</p>
+            <p>The balance has remained pending since April 2026.</p>
+            <p><a href="https://nschpaymentagreement.netlify.app" target="_blank" rel="noopener">https://nschpaymentagreement.netlify.app</a></p>
+            <p>Scan the QR code or open the link to view the supporting payment-agreement record.</p>
+        </div>
+        <img class="qr"
+             src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fnschpaymentagreement.netlify.app"
+             alt="QR code for payment agreement record">
+    </section>
+
+    <section class="terms">
+        <h3>Payment &amp; Service Continuity Terms</h3>
+        <p>The quoted production work was initiated after the commercial terms were presented and agreed to by the buying party. The outstanding balance of <strong>Rs. 4,000</strong> must be received by <strong>08 August 2026</strong>.</p>
+        <p>If payment is further delayed beyond the stated deadline, CampusHub reserves the right to suspend or take down the hosted websites, platform access and project resources until all applicable dues are cleared. Any resulting downtime or loss of service during such suspension will not be considered the responsibility of CampusHub or its project team. Continued hosting, renewal, reactivation or additional resource allocation may be charged separately.</p>
+        <p><strong>Clarification:</strong> Penalty charges apply only to the NSCH Safe Netizen Portal due to payment delay. Penalties for the Personal Portfolio are revoked. The Safe Netizen domain renewal of Rs. 1,350 remains separate from the Rs. 30,000 project total.</p>
+    </section>
+
+    <section class="notice">
+        <h3>Payment &amp; Website Availability Notice</h3>
+        <p><strong>Professionalism applies both ways.</strong> If putting this bill up on the website publicly is considered unprofessional, then so is the act of repeatedly delaying the agreed payments by over four months.</p>
+        <p>Going forward, the website and related project services will remain active <strong>only after the applicable payments have been cleared</strong>. This is necessary because certain hosting, development, maintenance and project-related investments are currently being paid directly from the developer's personal savings.</p>
+        <p>Once the outstanding dues are cleared, service continuity can be maintained subject to the applicable project and hosting terms.</p>
+    </section>
+
+    <div class="footer">
+        Issued by <strong>Vinayak Pandya</strong> on behalf of <strong>CampusHub</strong>.
+    </div>
+</main>
+
+<a class="print" href="billnsch.pdf" download="billnsch.pdf">Download billnsch.pdf</a>
+</body>
+</html>
